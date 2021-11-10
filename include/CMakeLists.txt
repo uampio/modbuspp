@@ -1,8 +1,8 @@
-file(GLOB HDR_ROOT "*.hpp")
+file(GLOB HDR_ROOT "*.h" "*.cpp")
 
 set(ROOT_INCLUDE_TARGET include)
 
-add_library(${PROJECT_NAME} INTERFACE modbus.cpp)
+add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(${PROJECT_NAME}
     INTERFACE

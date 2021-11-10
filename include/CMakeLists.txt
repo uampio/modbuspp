@@ -2,6 +2,8 @@ file(GLOB HDR_ROOT "*.h" "*.cpp")
 
 set(ROOT_INCLUDE_TARGET include)
 
+add_executable(${PROJECT_NAME}  modbus.cpp)
+
 add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(${PROJECT_NAME}

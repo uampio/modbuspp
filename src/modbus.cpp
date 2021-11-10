@@ -150,6 +150,7 @@ int modbus::modbus_write(uint16_t address, uint16_t amount, int func, const uint
         to_send[10] = (uint8_t)(value[0] >> 8u);
         to_send[11] = (uint8_t)(value[0] & 0x00FFu);
         status = modbus_send(to_send, 12);
+        delete[] to_send;
     }
     else if (func == WRITE_REGS)
     {
@@ -165,6 +166,7 @@ int modbus::modbus_write(uint16_t address, uint16_t amount, int func, const uint
             to_send[14 + 2 * i] = (uint8_t)(value[i] & 0x00FFu);
         }
         status = modbus_send(to_send, 13 + 2 * amount);
+        delete[] to_send;
     }
     else if (func == WRITE_COILS)
     {
@@ -181,8 +183,9 @@ int modbus::modbus_write(uint16_t address, uint16_t amount, int func, const uint
             to_send[13 + i / 8] += (uint8_t)(value[i] << (i % 8u));
         }
         status = modbus_send(to_send, 14 + (amount - 1) / 8);
+        delete[] to_send;
     }
-    delete[] to_send;
+
     return status;
 }
 

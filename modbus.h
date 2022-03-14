@@ -61,7 +61,7 @@ using SOCKADDR_IN = struct sockaddr_in;
 
 #define MAX_MSG_LENGTH 260
 
-///Function Code
+/// Function Code
 #define READ_COILS 0x01
 #define READ_INPUT_BITS 0x02
 #define READ_REGS 0x03
@@ -71,7 +71,7 @@ using SOCKADDR_IN = struct sockaddr_in;
 #define WRITE_COILS 0x0F
 #define WRITE_REGS 0x10
 
-///Exception Codes
+/// Exception Codes
 
 #define EX_ILLEGAL_FUNCTION 0x01 // Function Code not Supported
 #define EX_ILLEGAL_ADDRESS 0x02  // Output Address not exists
@@ -646,7 +646,18 @@ ssize_t modbus::modbus_send(uint8_t *to_send, size_t length)
  */
 ssize_t modbus::modbus_receive(uint8_t *buffer) const
 {
-    return recv(_socket, (char *)buffer, 1024, 0);
+    ssize_t return_vaue_;
+
+    char buffer_[1024];
+
+    return_vaue_ = recv(_socket, &buffer_, 1024, 0);
+
+    for (int i = 0; i < 1024; i++) // Check for a cleaner way
+    {
+        buffer[i] = static_cast<uint8_t>(buffer_[i]);
+    }
+
+    return return_vaue_;
 }
 
 void modbus::set_bad_con()
@@ -712,4 +723,4 @@ void modbus::modbuserror_handle(const uint8_t *msg, int func)
     }
 }
 
-#endif //MODBUSPP_MODBUS_H
+#endif // MODBUSPP_MODBUS_H

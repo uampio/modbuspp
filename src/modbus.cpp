@@ -504,7 +504,19 @@ ssize_t modbus::modbus_send(uint8_t *to_send, size_t length)
  */
 ssize_t modbus::modbus_receive(uint8_t *buffer) const
 {
-    return recv(_socket, (char *)buffer, 1024, 0);
+    ssize_t return_vaue_;
+
+    char buffer_[1024];
+
+    return_vaue_ = recv(_socket, &buffer_, 1024, 0);
+
+    for (int i = 0; i < 1024; i++)
+    {
+
+        buffer[i] = static_cast<uint8_t>(buffer_[i]);
+    }
+
+    return return_vaue_;
 }
 
 void modbus::set_bad_con()

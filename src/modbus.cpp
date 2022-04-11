@@ -217,7 +217,7 @@ int modbus::modbus_read_holding_registers(uint16_t address, uint16_t amount, uin
     if (_connected)
     {
         modbus_read(address, amount, READ_REGS);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -253,7 +253,7 @@ int modbus::modbus_read_input_registers(uint16_t address, uint16_t amount, uint1
     if (_connected)
     {
         modbus_read(address, amount, READ_INPUT_REGS);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -294,7 +294,7 @@ int modbus::modbus_read_coils(uint16_t address, uint16_t amount, bool *buffer)
             return EX_BAD_DATA;
         }
         modbus_read(address, amount, READ_COILS);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -334,7 +334,7 @@ int modbus::modbus_read_input_bits(uint16_t address, uint16_t amount, bool *buff
             return EX_BAD_DATA;
         }
         modbus_read(address, amount, READ_INPUT_BITS);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -368,7 +368,7 @@ int modbus::modbus_write_coil(uint16_t address, const bool &to_write)
     {
         int value = to_write * 0xFF00;
         modbus_write(address, 1, WRITE_COIL, (uint16_t *)&value);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -398,7 +398,7 @@ int modbus::modbus_write_register(uint16_t address, const uint16_t &value)
     if (_connected)
     {
         modbus_write(address, 1, WRITE_REG, &value);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -435,7 +435,7 @@ int modbus::modbus_write_coils(uint16_t address, uint16_t amount, const bool *va
         }
         modbus_write(address, amount, WRITE_COILS, temp);
         delete[] temp;
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
@@ -466,7 +466,7 @@ int modbus::modbus_write_registers(uint16_t address, uint16_t amount, const uint
     if (_connected)
     {
         modbus_write(address, amount, WRITE_REGS, value);
-        uint8_t to_rec[MAX_MSG_LENGTH];
+        uint8_t to_rec[1024];
         ssize_t k = modbus_receive(to_rec);
         if (k == -1)
         {
